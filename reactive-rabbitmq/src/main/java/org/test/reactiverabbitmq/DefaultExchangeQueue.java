@@ -26,19 +26,10 @@ public class DefaultExchangeQueue {
 
     @PostConstruct
     public void init() {
-//        Exchange ex = ExchangeBuilder.directExchange(EXCHANGE)
-//                .durable(true)
-//                .build();
-//        amqpAdmin.declareExchange(ex);
         Queue q = QueueBuilder.durable(
                         QUEUE)
                 .build();
         amqpAdmin.declareQueue(q);
-//        Binding b = BindingBuilder.bind(q)
-//                .to(ex)
-//                .with(QUEUE)
-//                .noargs();
-//        amqpAdmin.declareBinding(b);
     }
 
     @PreDestroy

@@ -4,6 +4,7 @@ import com.rabbitmq.client.Delivery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.rabbitmq.OutboundMessage;
@@ -13,9 +14,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.test.reactiverabbitmq.DefaultExchangeQueue.QUEUE;
-
 @Component
+@Profile("cli")
 class CommandLinePublisherConsumer implements CommandLineRunner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootSample.class);
