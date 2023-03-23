@@ -15,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
-@Profile("cli")
 class CommandLinePublisherConsumer implements CommandLineRunner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootSample.class);

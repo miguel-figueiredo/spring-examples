@@ -9,8 +9,5 @@ dev-dependencies: ## Runs the backend development dependencies
 dev: ## Runs the backend service in development mode
 	mvn spring-boot:run
 
-dev-cli: ## Runs the backend service in development mode with the cli profile
-	mvn spring-boot:run -Dspring-boot.run.profiles=cli
-
 dev-dependencies-down: ## Stops all the development dependencies
 	docker-compose down
