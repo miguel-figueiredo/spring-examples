@@ -25,14 +25,14 @@ public class ReactiveCloudStreamApplication {
 	public Supplier<Flux<String>> stringSupplier() {
 		return () -> Flux.fromStream(Stream.generate(() -> "Hello"))
 				.delayElements(Duration.ofSeconds(1))
-				.doOnEach(consumer -> log.info("Sending: {}", consumer.get()))
+				.doOnNext(value -> log.info("Sending: {}", value))
 				.subscribeOn(Schedulers.boundedElastic()).share();
 	}
 
 	@Bean
 	public Function<Flux<String>, Mono<Void>> stringConsumer() {
 		return flux -> flux
-				.doOnEach(consumer -> log.info("Receiving: {}", consumer.get()))
+				.doOnNext(value -> log.info("Receiving: {}", value))
 				.then();
 	}
 
