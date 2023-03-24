@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ProcessingApplication {
 
 	public static void main(String[] args) {
+		System.setProperty("reactor.bufferSize.small", "10");
 		SpringApplication.run(ProcessingApplication.class, args);
 	}
 
