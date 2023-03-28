@@ -2,19 +2,15 @@ package com.test.processing;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.support.Delivery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 import reactor.rabbitmq.AcknowledgableDelivery;
 import reactor.rabbitmq.OutboundMessage;
 import reactor.rabbitmq.Receiver;
 import reactor.rabbitmq.Sender;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 import static com.test.processing.QueueConfiguration.EXCHANGE;
 import static com.test.processing.QueueConfiguration.IN_QUEUE;
@@ -44,8 +40,13 @@ public class QueueStream {
                         .thenReturn(delivery)
                 )
                 .flatMap(delivery -> sender.send(Mono.just(new OutboundMessage(EXCHANGE, OUT_QUEUE, delivery.getBody())))
-                        .doOnSuccess(signalType -> delivery.ack()))
+                        .doOnSuccess(signalType -> ack(delivery)))
                 .subscribe();
+    }
+
+    private void ack(final AcknowledgableDelivery delivery) {
+        delivery.ack();
+        log.info("Acked: {}", getPayload(delivery));
     }
 
     private String getPayload(AcknowledgableDelivery delivery) {
