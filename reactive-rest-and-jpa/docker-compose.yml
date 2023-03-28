@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: 'postgres'
+    image: 'postgres'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+
+  app:
+    container_name: 'app'
+    image: 'docker.io/library/reactive-rest-and-jpa:0.0.1-SNAPSHOT'
+    platform: 'linux/amd64'
+    environment:
+      - SPRING_R2DBC_URL=r2dbc:postgresql://postgres:5432/postgres
+      - SPRING_FLYWAY_URL=jdbc:postgresql://postgres:5432/postgres
+    ports:
+      - '8080:8080'
