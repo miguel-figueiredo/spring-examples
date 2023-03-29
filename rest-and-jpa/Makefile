@@ -12,8 +12,11 @@ dev: ## Runs the backend service in development mode
 dev-dependencies-down: ## Stops all the development dependencies
 	docker-compose down
 
-performance-test: ## Runs performance tests
-	k6 run src/main/k6/test.js
+performance-test-create: ## Runs create performance tests
+	k6 run src/main/k6/test_create.js
+
+performance-test-get: ## Runs get performance tests
+	k6 run src/main/k6/test_get.js
 
 docker: ## Builds the docker image
 	mvn spring-boot:build-image -DskipTests
