@@ -15,7 +15,7 @@ public class Processor {
 
     public Mono<String> execute(final String message) {
         return Mono.just(message.toUpperCase()).delayElement(Duration.ofMillis(random.nextInt(5000)))
-                .doOnNext(s -> log.info("Processed: {}", message));
+                .doOnNext(s -> log.info("Processed: {}", message))
     }
 
 }

@@ -12,7 +12,7 @@ public class Processor {
     private Random random = new Random();
 
     public Mono<String> execute(final String message) {
-        return Mono.just(message.toUpperCase()).delayElement(Duration.ofMillis(random.nextInt(5000)));
+        return Mono.just(message.toUpperCase()).delayElement(Duration.ofMillis(5000));
     }
 
 }
