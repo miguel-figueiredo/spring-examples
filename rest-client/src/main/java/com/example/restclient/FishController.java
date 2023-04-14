@@ -26,4 +26,9 @@ public class FishController {
     String getFishName(@PathVariable String id) {
         return webClient.getName(id);
     }
+
+    @GetMapping("/{id}/vernacular")
+    String getFishVernacularNames(@PathVariable String id) {
+        return webClient.getName(id);
+    }
 }

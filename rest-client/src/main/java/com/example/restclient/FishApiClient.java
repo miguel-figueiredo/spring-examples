@@ -51,4 +51,19 @@ public class FishApiClient {
                 .getBody();
     }
 
+    @Cacheable("fishesVernacularNames")
+    @Retryable(listeners = "registeredRetryListener")
+    public String getVernacularNames(String id) {
+        // Path variables with UriComponentsBuilder
+        final String urlTemplate = UriComponentsBuilder.fromUriString("https://api.gbif.org/v1/species/")
+                .pathSegment("{id}", "name")
+                .encode()
+                .toUriString();
+
+        final Map<String, String> params = Map.of("id", id);
+
+        return restTemplate.exchange(urlTemplate, HttpMethod.GET, new HttpEntity<>(new HttpHeaders()), String.class, params)
+                .getBody();
+    }
+
 }
