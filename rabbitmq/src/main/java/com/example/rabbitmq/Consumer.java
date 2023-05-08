@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class Consumer {
 
-    @RabbitListener(id="listener", queues = "myQueue")
+    @RabbitListener(id="listener", queues = "${application.queue}")
     public void listen(String in) {
         log.info("Message read from myQueue : {}", in);
     }
