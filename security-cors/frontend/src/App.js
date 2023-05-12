@@ -1,24 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  const parameters = new URLSearchParams({
-    username: 'user',
-    password: 'pass',
-  });
-
-  fetch("http://localhost:8080/login?" + parameters, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'text/plain',
-        'pragma': 'no-cache',
-        'cache-control': 'no-cache'
-    },
-    redirect: 'follow',
-    credentials: 'include'
-  }).then(value => value.text().then(text => console.log(text)));
-
-  fetch('http://localhost:8080/hello', {
+function hello() {
+  return fetch('http://localhost:8080/hello', {
     method: 'GET',
     headers: {
         'Content-Type': 'text/plain',
@@ -27,8 +11,33 @@ function App() {
     },
     redirect: 'follow',
     credentials: 'include'
-  }).then(value => value.text().then(text => console.log(text)));
+  });
+}
 
+function login() {
+  const parameters = new URLSearchParams({
+    username: 'user',
+    password: 'pass',
+  });
+
+  return fetch("http://localhost:8080/login?" + parameters, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'text/plain',
+        'pragma': 'no-cache',
+        'cache-control': 'no-cache'
+    },
+    redirect: 'follow',
+    credentials: 'include'
+  });
+}
+
+function App() {
+  
+  login().then(response => {
+      hello().then(response => {response.text()
+        .then(text => console.log(text))});
+  });
 
   return (
     <div className="App">
