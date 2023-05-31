@@ -1,11 +1,13 @@
 package com.example.pagination;
 
 import jakarta.persistence.EntityManager;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Repository
@@ -21,12 +23,23 @@ public class OceanRepository {
                         OceanFishPair.class)
                 .getResultList();
 
-        return resultList.stream().collect(Collectors.groupingBy(OceanFishPair::getOcean))
+        return resultList.stream().collect(Collectors.groupingBy(OceanFishPair::getOcean, TreeMap::new, Collectors.toList()))
                 .entrySet().stream()
-                .map(entry -> entry.getKey()
-                        .toBuilder()
-                        .fishList(entry.getValue().stream().map(OceanFishPair::getFish).toList())
-                        .build())
+                .map(OceanRepository::toOcean)
+                .toList();
+    }
+
+    private static Ocean toOcean(final Map.Entry<Ocean, List<OceanFishPair>> entry) {
+        return entry.getKey()
+                .toBuilder()
+                .fishList(toFishList(entry))
+                .build();
+    }
+
+    private static List<Fish> toFishList(final Map.Entry<Ocean, List<OceanFishPair>> entry) {
+        return entry.getValue().stream()
+                .map(OceanFishPair::getFish)
+                .filter(Objects::nonNull)
                 .toList();
     }
 

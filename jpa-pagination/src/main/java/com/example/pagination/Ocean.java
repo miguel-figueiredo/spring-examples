@@ -1,11 +1,7 @@
 package com.example.pagination;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,7 +17,7 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Ocean {
+public class Ocean implements Comparable<Ocean> {
     @Id
     private UUID id;
 
@@ -29,4 +25,9 @@ public class Ocean {
 
     @Transient
     private List<Fish> fishList;
+
+    @Override
+    public int compareTo(final Ocean o) {
+        return name.compareTo(o.getName());
+    }
 }
