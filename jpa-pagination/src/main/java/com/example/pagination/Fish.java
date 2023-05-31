@@ -13,10 +13,11 @@ import java.util.UUID;
 @Getter
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 public class Fish {
     @Id
     private UUID id;
 
     private String name;
+
+    private UUID oceanId;
 }

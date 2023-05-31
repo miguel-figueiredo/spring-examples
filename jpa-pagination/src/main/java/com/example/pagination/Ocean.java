@@ -6,7 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,15 +18,20 @@ import java.util.UUID;
 
 @Getter
 @Entity
+@Builder(toBuilder = true)
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Ocean {
     @Id
     private UUID id;
 
     private String name;
 
-    @OneToMany
-    @JoinColumn(name="ocean_id")
+    @Transient
     private List<Fish> fishList;
+
+    public Ocean(Ocean ocean, List<Fish> fishList) {
+        this(ocean.getId(), ocean.getName(), fishList);
+    }
+
 }
