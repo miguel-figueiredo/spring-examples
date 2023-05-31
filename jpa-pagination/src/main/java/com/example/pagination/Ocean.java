@@ -29,9 +29,4 @@ public class Ocean {
 
     @Transient
     private List<Fish> fishList;
-
-    public Ocean(Ocean ocean, List<Fish> fishList) {
-        this(ocean.getId(), ocean.getName(), fishList);
-    }
-
 }
