@@ -1,5 +1,8 @@
 package com.example.archunit.hello.business.entity;
 
+import com.example.archunit.hello.adapter.postgres.JpaHelloRepository;
+import com.example.archunit.hello.business.port.in.CreateHello;
+import com.example.archunit.hello.business.usecase.CreateHelloUseCase;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 

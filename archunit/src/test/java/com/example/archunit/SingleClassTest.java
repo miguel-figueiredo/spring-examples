@@ -6,6 +6,8 @@ import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.library.Architectures;
 import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition;
 
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
+
 @AnalyzeClasses(packages = "com.example.archunit")
 public class SingleClassTest {
 
@@ -25,5 +27,28 @@ public class SingleClassTest {
                     .applicationServices("com.example.archunit..")
                     .adapter("postgres", "com.example.archunit.hello.adapter.postgres..")
                     .adapter("rest", "com.example.archunit.hello.adapter.rest..");
+
+    @ArchTest
+    static final ArchRule adapter_dependencies =
+            noClasses().that().resideInAPackage("..adapter..")
+                    .should().dependOnClassesThat().resideInAPackage("..usecase..");
+
+    @ArchTest
+    static final ArchRule port_dependencies =
+            noClasses().that().resideInAPackage("..port..")
+                    .should().dependOnClassesThat().resideInAPackage("..adapter..")
+                    .orShould().dependOnClassesThat().resideInAPackage("..usecase..");
+
+    @ArchTest
+    static final ArchRule entity_dependencies =
+            noClasses().that().resideInAPackage("..entity..")
+                    .should().dependOnClassesThat().resideInAPackage("..usecase..")
+                    .orShould().dependOnClassesThat().resideInAPackage("..port..")
+                    .orShould().dependOnClassesThat().resideInAPackage("..adapter..");
+
+    @ArchTest
+    static final ArchRule usecase_dependencies =
+            noClasses().that().resideInAPackage("..usecase..")
+                    .should().dependOnClassesThat().resideInAPackage("..adapter..");
 
 }
