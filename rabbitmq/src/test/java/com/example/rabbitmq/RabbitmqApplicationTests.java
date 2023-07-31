@@ -9,7 +9,7 @@ import org.springframework.amqp.rabbit.test.mockito.LatchCountDownAndCallRealMet
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 
@@ -25,15 +25,14 @@ class RabbitmqApplicationTests {
 	private RabbitListenerTestHarness harness;
 
 	@Test
-	void test() throws InterruptedException {
+	void testMessageA() throws InterruptedException {
 		Consumer consumer = this.harness.getSpy("listener");
 		LatchCountDownAndCallRealMethodAnswer answer = this.harness.getLatchAnswerFor("listener", 1);
-		doAnswer(answer).when(consumer).listen(anyString());
+		doAnswer(answer).when(consumer).listen(any(MyMessage.class));
 
-		template.convertAndSend("myQueue", "message");
+		template.convertAndSend("myQueue", new MyMessage("message"));
 
 		answer.await(10);
-		verify(consumer).listen("message");
+		verify(consumer).listen(new MyMessage("message"));
 	}
-
 }

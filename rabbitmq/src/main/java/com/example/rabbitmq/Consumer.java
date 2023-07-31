@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class Consumer {
 
     @RabbitListener(id="listener", queues = "${application.queue}")
-    public void listen(String in) {
-        log.info("Message read from myQueue : {}", in);
+    public void listen(MyMessage message) {
+        log.info("Message read: {}", message);
     }
 }
