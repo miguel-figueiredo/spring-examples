@@ -21,6 +21,7 @@ import org.springframework.messaging.Message;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 
 @Configuration
 @Slf4j
@@ -58,15 +59,21 @@ public class SftpStreamingConfiguration {
     @ServiceActivator(inputChannel = "stream")
     @Bean
     public InputStreamMessageHandler handle() {
-        return message -> {
-            log.info("File: {}", message.getHeaders().get("file_remoteFile"));
-            InputStream inputStream = message.getPayload();
-            try {
-                log.info("Payload: {}", new String(inputStream.readAllBytes()));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        };
+        return this::handle;
+    }
+
+    private void handle(Message<InputStream> message) {
+        log.info("Headers: {}", message.getHeaders());
+        final String directory = message.getHeaders().get("file_remoteDirectory").toString();
+        final String file = message.getHeaders().get("file_remoteFile").toString();
+        log.info("File: {}", file);
+        InputStream inputStream = message.getPayload();
+        try {
+            log.info("Payload: {}", new String(inputStream.readAllBytes()));
+            new SftpRemoteFileTemplate(sftpSessionFactory()).remove(Path.of(directory, file ).toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FunctionalInterface
