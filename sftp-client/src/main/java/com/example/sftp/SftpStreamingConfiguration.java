@@ -63,10 +63,10 @@ public class SftpStreamingConfiguration {
     @Bean
     public InputStreamMessageHandler handle() {
         return message -> {
-            System.out.println(message.getHeaders().get("file_remoteFile"));
+            log.info("File: {}", message.getHeaders().get("file_remoteFile"));
             InputStream inputStream = message.getPayload();
             try {
-                System.out.println(new String(inputStream.readAllBytes()));
+                log.info("Payload: {}", new String(inputStream.readAllBytes()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
