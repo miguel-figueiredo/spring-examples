@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  sftp:
+    container_name: 'sftp'
+    image: 'atmoz/sftp'
+    platform: 'linux/amd64'
+    volumes:
+      - ./users.conf:/etc/sftp/users.conf:ro
+      - ./upload:/home/sftp/upload
+    ports:
+      - '2222:22'
