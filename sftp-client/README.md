@@ -6,11 +6,22 @@ The polling mechanism stores the processed files in a Redis metastore.
 
 ## Running
 
+### Initialize all the development dependencies
+
 ```
 make dev-dependencies
+```
+
+### Start the application
+
+```
 make dev
 ```
 
-Files can be "uploaded" to the SFTP server, simply by copying them to the `upload` folder which is created by the `make dev-dependencies` in the root of the project.
+This command can be executed in different shells to test concurrency between different application instances.
 
-After a file is uploaded to the SFTP server the application detects it and shows its contents in the console.
+### Upload files
+
+```
+make upload
+```
