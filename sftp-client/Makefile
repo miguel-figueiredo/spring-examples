@@ -5,6 +5,7 @@ help:
 
 dev-dependencies: ## Runs the backend development dependencies
 	docker-compose up -d
+	mkdir -p upload
 	sleep 5
 	ssh-keyscan -p 2222 localhost | grep rsa >src/main/resources/known_hosts
 
