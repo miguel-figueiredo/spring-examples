@@ -1,6 +1,6 @@
 # Spring SFTP Client Example
 
-Uses [SFTP Adapters](https://docs.spring.io/spring-integration/docs/current/reference/html/sftp.html) to connect, poll and retrieve data from SFTP.
+Uses [SFTP Adapters](https://docs.spring.io/spring-integration/docs/current/reference/html/sftp.html) to connect, poll, retrieves, and removes files from an SFTP server.
 
 The polling mechanism stores the processed files in a Redis metastore.
 
@@ -25,3 +25,5 @@ This command can be executed in different shells to test concurrency between dif
 ```
 make upload
 ```
+
+The files are deleted from the SFTP server by the application after being processed.
