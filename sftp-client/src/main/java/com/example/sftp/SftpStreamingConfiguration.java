@@ -27,8 +27,11 @@ import java.nio.file.Path;
 @Slf4j
 public class SftpStreamingConfiguration {
 
-    @Autowired
-    ConcurrentMetadataStore metadataStore;
+    private final ConcurrentMetadataStore metadataStore;
+
+    public SftpStreamingConfiguration(final ConcurrentMetadataStore metadataStore) {
+        this.metadataStore = metadataStore;
+    }
 
     @Bean
     public SessionFactory<SftpClient.DirEntry> sftpSessionFactory() {
@@ -54,30 +57,5 @@ public class SftpStreamingConfiguration {
     @Bean
     public SftpRemoteFileTemplate template() {
         return new SftpRemoteFileTemplate(sftpSessionFactory());
-    }
-
-    @ServiceActivator(inputChannel = "stream")
-    @Bean
-    public InputStreamMessageHandler handle() {
-        return this::handle;
-    }
-
-    private void handle(Message<InputStream> message) {
-        log.info("Headers: {}", message.getHeaders());
-        final String directory = message.getHeaders().get("file_remoteDirectory").toString();
-        final String file = message.getHeaders().get("file_remoteFile").toString();
-        log.info("File: {}", file);
-        InputStream inputStream = message.getPayload();
-        try {
-            log.info("Payload: {}", new String(inputStream.readAllBytes()));
-            new SftpRemoteFileTemplate(sftpSessionFactory()).remove(Path.of(directory, file ).toString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FunctionalInterface
-    public interface InputStreamMessageHandler {
-        void handle(Message<InputStream> message);
     }
 }
