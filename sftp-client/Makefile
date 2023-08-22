@@ -12,6 +12,9 @@ dev-dependencies: ## Runs the backend development dependencies
 dev: ## Runs the backend service in development mode
 	mvn spring-boot:run
 
+debug: ## Runs the backend service in debug mode
+	mvn spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7777"
+
 dev-dependencies-down: ## Stops all the development dependencies
 	docker-compose down
 
