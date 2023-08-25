@@ -2,13 +2,11 @@ package com.example.sftp;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.sshd.sftp.client.SftpClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.integration.annotation.InboundChannelAdapter;
 import org.springframework.integration.annotation.Poller;
-import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.core.MessageSource;
 import org.springframework.integration.file.remote.session.CachingSessionFactory;
 import org.springframework.integration.file.remote.session.SessionFactory;
@@ -17,16 +15,14 @@ import org.springframework.integration.sftp.filters.SftpPersistentAcceptOnceFile
 import org.springframework.integration.sftp.inbound.SftpStreamingMessageSource;
 import org.springframework.integration.sftp.session.DefaultSftpSessionFactory;
 import org.springframework.integration.sftp.session.SftpRemoteFileTemplate;
-import org.springframework.messaging.Message;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
 
 @Configuration
 @Slf4j
 public class SftpStreamingConfiguration {
 
+    public static final String METADATA_STORE_KEY = "SFTP_FILE_";
     private final ConcurrentMetadataStore metadataStore;
 
     public SftpStreamingConfiguration(final ConcurrentMetadataStore metadataStore) {
@@ -50,12 +46,29 @@ public class SftpStreamingConfiguration {
         SftpStreamingMessageSource messageSource = new SftpStreamingMessageSource(template());
         messageSource.setRemoteDirectory("upload");
         messageSource.setMaxFetchSize(1);
-        messageSource.setFilter(new SftpPersistentAcceptOnceFileListFilter(metadataStore, "sftpStreamingMessageSource"));
+        messageSource.setFilter(new SftpPersistentAcceptOnceFileListFilter(metadataStore, METADATA_STORE_KEY));
         return messageSource;
     }
 
     @Bean
     public SftpRemoteFileTemplate template() {
         return new SftpRemoteFileTemplate(sftpSessionFactory());
+    }
+
+    @Bean
+    public SftpStreamingMetadataStore sftpStreamingMetadataStore() {
+        return new SftpStreamingMetadataStore(metadataStore);
+    }
+
+    public static class SftpStreamingMetadataStore {
+        private final ConcurrentMetadataStore metadataStore;
+
+        public SftpStreamingMetadataStore(ConcurrentMetadataStore metadataStore) {
+            this.metadataStore = metadataStore;
+        }
+
+        public void remove(String fileName) {
+            metadataStore.remove(METADATA_STORE_KEY + fileName);
+        }
     }
 }
