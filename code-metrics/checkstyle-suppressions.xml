@@ -1,8 +1,18 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suppressions PUBLIC
-        "-//Checkstyle//DTD SuppressionFilter Configuration 1.0//EN"
-        "https://checkstyle.org/dtds/suppressions_1_0.dtd">
-
+    "-//Checkstyle//DTD SuppressionXpathFilter Experimental Configuration 1.2//EN"
+    "https://checkstyle.org/dtds/suppressions_1_2_xpath_experimental.dtd">
 <suppressions>
+<suppress-xpath
+       files="CodeMetricsApplicationTests.java"
+       checks="IndentationCheck"
+       query="/COMPILATION_UNIT/CLASS_DEF[./IDENT[@text='CodeMetricsApplicationTests']]/OBJBLOCK/METHOD_DEF[./IDENT[@text='contextLoads']]/MODIFIERS"/>
+<suppress-xpath
+       files="CodeMetricsApplicationTests.java"
+       checks="IndentationCheck"
+       query="/COMPILATION_UNIT/CLASS_DEF[./IDENT[@text='CodeMetricsApplicationTests']]/OBJBLOCK/METHOD_DEF[./IDENT[@text='contextLoads']]/SLIST/RCURLY"/>
+<suppress-xpath
+       files="HelloController.java"
+       checks="CustomImportOrderCheck"
+       query="/COMPILATION_UNIT/IMPORT[./DOT/IDENT[@text='HashMap']]"/>
 </suppressions>
