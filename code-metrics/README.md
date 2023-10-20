@@ -32,7 +32,14 @@ This will add XPath suppressions which need to be added to the checkstyle.xml li
 
 The pmd-ruleset.xml was copied from the default ruleset that is generated in the target directory when running PMD.
 
-The PMD suppressions can be added automatically running by installing PMD (e.g. `brew install pmd`) and running the command:
+The PMD suppressions can be added automatically by installing PMD (e.g. `brew install pmd`) and running the command:
 
 `pmd pmd -d src/main/java -R pmd-ruleset.xml -f json | python generate-pmd-suppressions.py >pmd-suppressions.properties`
+
+## SpotBugs
+
+The SpotBugs suppressions can be added automatically by running:
+
+`mvn clean install`
+`cat target/spotbugsSarif.json | python3 generate-spotbugs-suppressions.py > spotbugs-suppressions.xml`
 
