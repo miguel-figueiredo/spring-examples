@@ -1,6 +1,6 @@
 package com.example.archunit.hello.business.port.out;
 
-import com.example.archunit.hello.business.entity.Hello;
+import com.example.archunit.hello.business.model.Hello;
 
 import java.util.List;
 

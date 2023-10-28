@@ -1,6 +1,6 @@
 package com.example.archunit.hello.business.usecase;
 
-import com.example.archunit.hello.business.entity.Hello;
+import com.example.archunit.hello.business.model.Hello;
 import com.example.archunit.hello.business.port.in.GetHellos;
 import com.example.archunit.hello.business.port.out.HelloRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,7 @@
 package com.example.archunit.hello.adapter.postgres;
 
-import com.example.archunit.hello.business.entity.Hello;
+import com.example.archunit.hello.business.model.Hello;
 import com.example.archunit.hello.business.port.out.HelloRepository;
-import com.example.archunit.hello.business.usecase.CreateHelloUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

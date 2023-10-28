@@ -1,6 +1,6 @@
 package com.example.archunit.hello.adapter.rest;
 
-import com.example.archunit.hello.business.entity.Hello;
+import com.example.archunit.hello.business.model.Hello;
 import com.example.archunit.hello.business.port.in.CreateHello;
 import com.example.archunit.hello.business.port.in.GetHellos;
 import org.springframework.beans.factory.annotation.Autowired;

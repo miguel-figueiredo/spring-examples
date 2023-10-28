@@ -19,7 +19,7 @@ public class SingleClassTest {
     @ArchTest
     static final ArchRule hexagonal_architecture =
             Architectures.onionArchitecture()
-                    .domainModels("com.example.archunit.hello.business.entity..")
+                    .domainModels("com.example.archunit.hello.business.model..")
                     .domainServices(
                             "com.example.archunit.hello.business.port..",
                             "com.example.archunit.hello.business.usecase.."
@@ -40,8 +40,8 @@ public class SingleClassTest {
                     .orShould().dependOnClassesThat().resideInAPackage("..usecase..");
 
     @ArchTest
-    static final ArchRule entity_dependencies =
-            noClasses().that().resideInAPackage("..entity..")
+    static final ArchRule model_dependencies =
+            noClasses().that().resideInAPackage("..model..")
                     .should().dependOnClassesThat().resideInAPackage("..usecase..")
                     .orShould().dependOnClassesThat().resideInAPackage("..port..")
                     .orShould().dependOnClassesThat().resideInAPackage("..adapter..");
