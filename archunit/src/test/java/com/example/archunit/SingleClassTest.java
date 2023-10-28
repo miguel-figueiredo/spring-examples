@@ -19,14 +19,14 @@ public class SingleClassTest {
     @ArchTest
     static final ArchRule hexagonal_architecture =
             Architectures.onionArchitecture()
-                    .domainModels("com.example.archunit.hello.business.model..")
+                    .domainModels("..model..")
                     .domainServices(
-                            "com.example.archunit.hello.business.port..",
-                            "com.example.archunit.hello.business.usecase.."
+                            "..port..",
+                            "..usecase.."
                             )
                     .applicationServices("com.example.archunit..")
-                    .adapter("postgres", "com.example.archunit.hello.adapter.postgres..")
-                    .adapter("rest", "com.example.archunit.hello.adapter.rest..");
+                    .adapter("jpa", "..adapter.jpa..")
+                    .adapter("rest", "..adapter.rest..");
 
     @ArchTest
     static final ArchRule adapter_dependencies =

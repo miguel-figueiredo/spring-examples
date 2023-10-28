@@ -1,4 +1,4 @@
-package com.example.archunit.hello.adapter.postgres;
+package com.example.archunit.hello.adapter.jpa;
 
 import com.example.archunit.hello.business.model.Hello;
 import com.example.archunit.hello.business.port.out.HelloRepository;
