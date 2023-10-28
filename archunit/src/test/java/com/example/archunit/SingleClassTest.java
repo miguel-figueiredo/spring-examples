@@ -49,6 +49,7 @@ public class SingleClassTest {
     @ArchTest
     static final ArchRule usecase_dependencies =
             noClasses().that().resideInAPackage("..usecase..")
-                    .should().dependOnClassesThat().resideInAPackage("..adapter..");
+                    .should().dependOnClassesThat().resideInAPackage("..port.in..")
+                    .andShould().dependOnClassesThat().resideInAPackage("..adapter..");
 
 }
