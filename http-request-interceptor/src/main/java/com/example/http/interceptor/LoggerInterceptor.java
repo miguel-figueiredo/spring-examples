@@ -16,8 +16,8 @@ public class LoggerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler){
-        final String traceId = request.getHeader(TRACE_ID);
-        MDC.put(TRACE_ID, traceId == null ? UUID.randomUUID().toString() : traceId);
+        // The trace-id header is injected in TraceIdHeaderFilter if null
+        MDC.put(TRACE_ID, request.getHeader(TRACE_ID));
         log.info("Prgie-handling request: {}", request.getRequestURI());
         return true;
     }
