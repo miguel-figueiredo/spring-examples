@@ -1,33 +1,32 @@
 package com.example;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Fish {
+public class Prey {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Prey> preyList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Fish fish;
 
-    public void setPreyList(final List<Prey> preyList) {
-        this.preyList = new ArrayList<>(preyList);
+    public Prey(final String name) {
+        this.name = name;
     }
 }
