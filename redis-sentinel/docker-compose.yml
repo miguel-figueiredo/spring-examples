@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+
+  app:
+    image: redis-sentinel:0.0.1-SNAPSHOT
+    container_name: app
+    ports:
+      - "8080:8080"
+     
+  redis-master:
+    image: redis:6-alpine
+    container_name: redis-master
+    command: redis-server --requirepass "redis-password"
+    volumes:
+      - "./.data:/data"
+    ports:
+      - "6379:6379"
+ 
+  redis-slave:
+    image: redis:6-alpine
+    container_name: redis-slave
+    command: redis-server --slaveof redis-master 6379 --requirepass "redis-password" --masterauth "redis-password"
+    links:
+      - redis-master
+    volumes:
+      - "./.data:/data"
+     
+  redis-sentinel:
+    build: 
+      context: redis-sentinel-docker
+    links:
+      - redis-master
+    ports:
+      - "26379:26379"
+    hostname: redis-sentinel
+    container_name: redis-sentinel
+ 

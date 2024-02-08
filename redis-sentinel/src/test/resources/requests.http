@@ -1,0 +1,8 @@
+GET http://localhost:8080/hello/cdddc812-11a4-4ca4-8324-d3c9d294c472
+
+###
+
+POST http://localhost:8080/hello
+Content-Type: text/plain
+
+Value
