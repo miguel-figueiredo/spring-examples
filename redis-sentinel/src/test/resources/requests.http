@@ -6,3 +6,7 @@ POST http://localhost:8080/hello
 Content-Type: text/plain
 
 Value
+
+###
+
+GET http://localhost:8080/actuator/health
