@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  localstack:
+    container_name: localstack
+    hostname: localstack
+    image: localstack/localstack:2.0.2
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,sqs
+      - DEBUG=1
+      - START_WEB=0
+      - LAMBDA_REMOTE_DOCKER=0
+      - DATA_DIR=/tmp/localstack/data
+      - DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test-key-id
+      - AWS_SECRET_ACCESS_KEY=test-secret-key
+    volumes:
+      - ./etc/aws/ready.d:/etc/localstack/init/ready.d
