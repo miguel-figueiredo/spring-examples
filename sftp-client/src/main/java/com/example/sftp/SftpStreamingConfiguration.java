@@ -41,7 +41,7 @@ public class SftpStreamingConfiguration {
     }
 
     @Bean
-    @InboundChannelAdapter(channel = "stream", poller = @Poller(fixedDelay = "100"))
+    @InboundChannelAdapter(channel = "stream", poller = @Poller(fixedDelay = "1000"))
     public MessageSource<InputStream> ftpMessageSource() {
         SftpStreamingMessageSource messageSource = new SftpStreamingMessageSource(template());
         messageSource.setRemoteDirectory("upload");
