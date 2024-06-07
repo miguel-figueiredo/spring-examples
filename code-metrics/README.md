@@ -1,6 +1,6 @@
 # Code Metrics
 
-Exampel project with some code metrics and static code analytis
+Example project with some code metrics and static code analysis
 
 ## Checkstyle
 
@@ -17,13 +17,13 @@ This way we can customize the Google checks.
 
 The checkstyle suppressions can be added automatically running the checkstyle jar (https://github.com/checkstyle/checkstyle/releases/) like:
 
-`java -jar checkstyle-10.12.2-all.jar -c checkstyle.xml . -g > suppressions.xml && mv suppressions.xml checkstyle-suppressions.xml`
+`java -jar checkstyle-10.12.2-all.jar -c checkstyle.xml . -g > suppressions.xml ; mv suppressions.xml checkstyle-xpath-suppressions.xml`
 
 This will add XPath suppressions which need to be added to the checkstyle.xml like:
 
 ```
 <module name="SuppressionXpathFilter">
-    <property name="file" value="checkstyle-suppressions.xml" />
+    <property name="file" value="checkstyle-xpath-suppressions.xml" />
     <property name="optional" value="false"/>
 </module>
 ```
