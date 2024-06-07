@@ -6,10 +6,14 @@ import org.apache.sshd.sftp.client.SftpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.ServiceActivator;
+import org.springframework.integration.context.IntegrationContextUtils;
+import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.file.FileHeaders;
 import org.springframework.integration.file.remote.session.SessionFactory;
 import org.springframework.integration.sftp.session.SftpRemoteFileTemplate;
 import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.MessagingException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,6 +54,12 @@ public class MessageHandler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @ServiceActivator(inputChannel = IntegrationContextUtils.ERROR_CHANNEL_BEAN_NAME)
+    public Message<String> handleError(Exception e) {
+        log.info("Error: {}", e.getMessage());
+        return null;
     }
 
     @FunctionalInterface
