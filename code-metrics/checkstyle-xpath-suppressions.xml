@@ -5,14 +5,10 @@
 <suppressions>
 <suppress-xpath
        files="HelloController.java"
-       checks="MissingJavadocMethodCheck"
-       query="/COMPILATION_UNIT/CLASS_DEF[./IDENT[@text='HelloController']]/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]"/>
+       checks="UnusedImportsCheck"
+       query="/COMPILATION_UNIT/IMPORT/DOT[./IDENT[@text='ByteArrayInputStream']]/DOT/IDENT[@text='java']"/>
 <suppress-xpath
-       files="CodeMetricsApplication.java"
-       checks="HideUtilityClassConstructorCheck"
-       query="/COMPILATION_UNIT/CLASS_DEF[./IDENT[@text='CodeMetricsApplication']]"/>
-<suppress-xpath
-       files="CodeMetricsApplication.java"
-       checks="MissingJavadocMethodCheck"
-       query="/COMPILATION_UNIT/CLASS_DEF[./IDENT[@text='CodeMetricsApplication']]/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]"/>
+       files="HelloController.java"
+       checks="UnusedImportsCheck"
+       query="/COMPILATION_UNIT/IMPORT/DOT[./IDENT[@text='HashMap']]/DOT/IDENT[@text='java']"/>
 </suppressions>
