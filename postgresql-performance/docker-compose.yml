@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: 'docker.io/bitnami/postgresql:15.4.0'
+    container_name: postgres
+    hostname: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_DATABASE=postgres
+  postgres-exporter:
+    image: 'prometheuscommunity/postgres-exporter-linux-arm64'
+    container_name: postgres-exporter
+    hostname: postgres-exporter
+    ports:
+      - "9187:9187"
+    environment:
+      - DATA_SOURCE_URI=postgres
+      - DATA_SOURCE_USER=postgres
+      - DATA_SOURCE_PASS=postgres?sslmode=disable
+  grafana:
+    image: grafana/grafana:9.0.4
+    container_name: grafana
+    hostname: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=false
+    volumes:
+      - ./src/main/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./src/main/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    hostname: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./src/main/prometheus:/etc/prometheus

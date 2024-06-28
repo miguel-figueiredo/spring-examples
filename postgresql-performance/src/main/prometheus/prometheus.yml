@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s
+
+  external_labels:
+    monitor: 'prometheus-metrics-monitor'
+
+scrape_configs:
+  - job_name: 'postgres-exporter'
+    metrics_path: '/probe'
+    params:
+      target: ['postgres:postgres@postgres:5432?sslmode=disable']
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+        - 'postgres-exporter:9187'
+
