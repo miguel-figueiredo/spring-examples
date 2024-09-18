@@ -33,7 +33,8 @@ public class PersonController {
     @Transactional
     @PostMapping
     Long create() {
-        Person person = new Person(RandomStringUtils.random(10));
+        final List<Address> addresses = List.of(new Address("Rua 666"));
+        Person person = new Person(RandomStringUtils.random(10), addresses);
         return personRepository.save(person).getId();
     }
 
