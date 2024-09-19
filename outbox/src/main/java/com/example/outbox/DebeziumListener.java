@@ -1,50 +1,56 @@
 package com.example.outbox;
 
+import io.debezium.config.Configuration;
 import io.debezium.embedded.Connect;
 import io.debezium.engine.DebeziumEngine;
 import io.debezium.engine.RecordChangeEvent;
 import io.debezium.engine.format.ChangeEventFormat;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
-@Configuration
-public class DebeziumConfiguration {
+@Component
+public class DebeziumListener {
 
-    Logger log = LoggerFactory.getLogger(DebeziumConfiguration.class);
+    Logger log = LoggerFactory.getLogger(DebeziumListener.class);
 
-    @Bean
-    public io.debezium.config.Configuration customerConnector() {
-        return io.debezium.config.Configuration.create()
-                .with("name", "customer-posgres-connector")
-                .with("connector.class", "io.debezium.connector.postgresql.PostgresConnector")
-                .with("database.hostname", "localhost")
-                .with("database.port", "5432")
-                .with("database.user", "postgres")
-                .with("database.password", "postgres")
-                .with("database.dbname", "postgres")
-                .with("database.include.list", "postgres")
-                .with("include.schema.changes", "false")
+    private final Executor executor = Executors.newSingleThreadExecutor();
+    private final DebeziumEngine<RecordChangeEvent<SourceRecord>> debeziumEngine;
+
+    public DebeziumListener(Configuration customerConnectorConfiguration) {
+        this.debeziumEngine = DebeziumEngine.create(ChangeEventFormat.of(Connect.class))
+                .using(customerConnectorConfiguration.asProperties())
+                .notifying(this::handleChangeEvent)
                 .build();
     }
 
-    @Bean
-    public DebeziumEngine<RecordChangeEvent<SourceRecord>> debeziumMessageProducer(
-            io.debezium.config.Configuration configuration) {
-
-        return DebeziumEngine.create(ChangeEventFormat.of(Connect.class))
-                .using(configuration.asProperties())
-                .notifying(this::handleEvent)
-                .build();
+    private void handleChangeEvent(RecordChangeEvent<SourceRecord> sourceRecordRecordChangeEvent) {
+        var sourceRecord = sourceRecordRecordChangeEvent.record();
+        log.info("Key = {}, Value = {}", sourceRecord.key(), sourceRecord.value());
+        var sourceRecordChangeValue= (Struct) sourceRecord.value();
+        log.info("SourceRecordChangeValue = '{}'", sourceRecordChangeValue);
     }
 
-    private void handleEvent(
-            List<RecordChangeEvent<SourceRecord>> recordChangeEvents,
-            DebeziumEngine.RecordCommitter<RecordChangeEvent<SourceRecord>> recordChangeEventRecordCommitter) {
-        log.info("Event");
+    @PostConstruct
+    private void start() {
+        this.executor.execute(debeziumEngine);
+    }
+
+    @PreDestroy
+    private void stop() throws IOException {
+        if (Objects.nonNull(this.debeziumEngine)) {
+            this.debeziumEngine.close();
+        }
     }
 }
