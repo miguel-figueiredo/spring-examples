@@ -11,5 +11,3 @@ services:
     command:
       - -c
       - wal_level=logical
-    volumes:
-      - ./etc/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d

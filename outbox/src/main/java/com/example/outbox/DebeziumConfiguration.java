@@ -1,23 +1,29 @@
 package com.example.outbox;
 
-import io.debezium.embedded.Connect;
-import io.debezium.engine.DebeziumEngine;
-import io.debezium.engine.RecordChangeEvent;
-import io.debezium.engine.format.ChangeEventFormat;
-import org.apache.kafka.connect.source.SourceRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 @Configuration
 public class DebeziumConfiguration {
 
-    Logger log = LoggerFactory.getLogger(DebeziumConfiguration.class);
+    @Value("${database.host}")
+    private String databaseHost;
+
+    @Value("${database.port}")
+    private int databasePort;
+
+    @Value("${database.name}")
+    private String databaseName;
+
+    @Value("${database.user}")
+    private String databaseUser;
+
+    @Value("${database.password}")
+    private String databasePassword;
 
     @Bean
     public io.debezium.config.Configuration customerConnector() throws IOException {
@@ -25,11 +31,11 @@ public class DebeziumConfiguration {
         return io.debezium.config.Configuration.create()
                 .with("name", "customer-postres-connector")
                 .with("connector.class", "io.debezium.connector.postgresql.PostgresConnector")
-                .with("database.hostname", "localhost")
-                .with("database.port", "5432")
-                .with("database.user", "postgres")
-                .with("database.password", "postgres")
-                .with("database.dbname", "persondb")
+                .with("database.hostname", databaseHost)
+                .with("database.port", databasePort)
+                .with("database.user", databaseUser)
+                .with("database.password", databasePassword)
+                .with("database.dbname", databaseName)
                 .with("table.include.list", "public.person")
                 .with("include.schema.changes", "false")
                 .with("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore")
