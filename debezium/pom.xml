@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>outbox</artifactId>
+	<artifactId>debezium</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>outbox</name>
 	<description>Demo project for Spring Boot</description>
