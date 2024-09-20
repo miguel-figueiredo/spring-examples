@@ -1,4 +1,4 @@
-package com.example.outbox;
+package com.example.debezium;
 
 import io.debezium.config.Configuration;
 import io.debezium.embedded.Connect;
@@ -11,11 +11,9 @@ import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;

@@ -1,4 +1,4 @@
-package com.example.outbox;
+package com.example.debezium;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

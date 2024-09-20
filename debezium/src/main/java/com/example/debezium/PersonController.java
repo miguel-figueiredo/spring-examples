@@ -1,4 +1,4 @@
-package com.example.outbox;
+package com.example.debezium;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.bind.annotation.PostMapping;

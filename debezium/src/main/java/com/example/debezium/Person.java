@@ -1,4 +1,4 @@
-package com.example.outbox;
+package com.example.debezium;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

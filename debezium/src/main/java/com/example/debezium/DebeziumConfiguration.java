@@ -1,4 +1,4 @@
-package com.example.outbox;
+package com.example.debezium;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

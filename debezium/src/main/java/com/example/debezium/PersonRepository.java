@@ -1,4 +1,4 @@
-package com.example.outbox;
+package com.example.debezium;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
