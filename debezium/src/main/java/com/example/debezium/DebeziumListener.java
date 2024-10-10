@@ -25,12 +25,14 @@ public class DebeziumListener {
 
     private final Executor executor = Executors.newSingleThreadExecutor();
     private final DebeziumEngine<RecordChangeEvent<SourceRecord>> debeziumEngine;
+    private final RabbitMqMessageProducer messageProducer;
 
-    public DebeziumListener(Configuration customerConnectorConfiguration) {
+    public DebeziumListener(Configuration personConnectorConfiguration, RabbitMqMessageProducer messageProducer) {
         this.debeziumEngine = DebeziumEngine.create(ChangeEventFormat.of(Connect.class))
-                .using(customerConnectorConfiguration.asProperties())
+                .using(personConnectorConfiguration.asProperties())
                 .notifying(this::handleChangeEvent)
                 .build();
+        this.messageProducer = messageProducer;
     }
 
     private void handleChangeEvent(RecordChangeEvent<SourceRecord> sourceRecordRecordChangeEvent) {
@@ -38,6 +40,8 @@ public class DebeziumListener {
         log.info("Key = {}, Value = {}", sourceRecord.key(), sourceRecord.value());
         var sourceRecordChangeValue= (Struct) sourceRecord.value();
         log.info("SourceRecordChangeValue = '{}'", sourceRecordChangeValue);
+        final String name = sourceRecordChangeValue.getStruct("after").getString("name");
+        messageProducer.send(name);
     }
 
     @PostConstruct
