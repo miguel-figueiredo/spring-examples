@@ -1,4 +1,4 @@
-package com.example.hexagonal.person.adapter.rest;
+package com.example.hexagonal.person.adapter.in.rest;
 
 import com.example.hexagonal.person.business.model.Person;
 import com.example.hexagonal.person.port.in.DeletePerson;

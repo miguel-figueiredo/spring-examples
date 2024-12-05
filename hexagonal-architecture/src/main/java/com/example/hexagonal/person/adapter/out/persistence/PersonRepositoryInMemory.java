@@ -1,4 +1,4 @@
-package com.example.hexagonal.person.adapter.persistence;
+package com.example.hexagonal.person.adapter.out.persistence;
 
 import com.example.hexagonal.person.business.model.Person;
 import com.example.hexagonal.person.port.out.PersonRepository;
