@@ -1,4 +1,4 @@
-package com.example.hexagonal.name.port.in;
+package com.example.hexagonal.person.port.in;
 
 import java.util.List;
 

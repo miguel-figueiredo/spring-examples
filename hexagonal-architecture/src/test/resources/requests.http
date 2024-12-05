@@ -1,7 +1,11 @@
 ### Add a name
-POST http://localhost:8080/api/names
+POST http://localhost:8080/api/persons
+Content-Type: application/json
 
-Miguel Figueiredo
+{
+    "firstName": "Miguel",
+    "lastName": "Figueiredo"
+}
 
 ### Gets the list of names
-GET http://localhost:8080/api/names
+GET http://localhost:8080/api/persons
