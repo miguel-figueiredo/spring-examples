@@ -9,6 +9,6 @@ import org.springframework.validation.annotation.Validated;
  */
 // TODO: add an alias
 @Validated
-public interface AddPerson {
+public interface SavePerson {
     void execute(@Valid Person person);
 }

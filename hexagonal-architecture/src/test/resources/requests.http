@@ -1,4 +1,4 @@
-### Add a name
+### Save a person
 POST http://localhost:8080/api/persons
 Content-Type: application/json
 
@@ -7,5 +7,18 @@ Content-Type: application/json
     "lastName": "Figueiredo"
 }
 
-### Gets the list of names
+### Update a person
+PUT http://localhost:8080/api/persons
+Content-Type: application/json
+
+{
+  "id": 1,
+  "firstName": "Miguel",
+  "lastName": "Amaral"
+}
+
+### Delete a person
+DELETE http://localhost:8080/api/persons/1
+
+### Gets the list of persons
 GET http://localhost:8080/api/persons

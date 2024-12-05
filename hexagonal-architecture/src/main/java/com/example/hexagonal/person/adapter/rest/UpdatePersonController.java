@@ -1,24 +1,25 @@
 package com.example.hexagonal.person.adapter.rest;
 
 import com.example.hexagonal.person.business.model.Person;
-import com.example.hexagonal.person.port.in.AddPerson;
-import org.springframework.web.bind.annotation.PostMapping;
+import com.example.hexagonal.person.port.in.SavePerson;
+import com.example.hexagonal.person.port.in.UpdatePerson;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/persons")
-public class AddPersonController {
+public class UpdatePersonController {
 
-    private final AddPerson addName;
+    private final UpdatePerson updatePerson;
 
-    public AddPersonController(AddPerson addName) {
-        this.addName = addName;
+    public UpdatePersonController(UpdatePerson updatePerson) {
+        this.updatePerson = updatePerson;
     }
 
-    @PostMapping
+    @PutMapping
     public void addName(@RequestBody Person person) {
-        addName.execute(person);
+        updatePerson.execute(person);
     }
 }
