@@ -1,7 +1,7 @@
 package com.example.hexagonal.person.port.in;
 
-import com.example.hexagonal.person.business.model.Person;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -10,5 +10,12 @@ import org.springframework.validation.annotation.Validated;
 // TODO: add an alias
 @Validated
 public interface SavePerson {
-    void execute(@Valid Person person);
+    void execute(@Valid NewPerson person);
+
+    public record NewPerson(
+            @NotEmpty
+            String firstName,
+            @NotEmpty
+            String lastName) {
+    }
 }

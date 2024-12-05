@@ -19,7 +19,14 @@ public class SavePersonUseCase implements SavePerson {
     }
 
     @Override
-    public void execute(final Person person) {
-        personRepository.save(person.withId(sequence.incrementAndGet()));
+    public void execute(final NewPerson person) {
+        personRepository.save(toPerson(person));
+    }
+
+    private Person toPerson(final NewPerson person) {
+        return new Person(
+                sequence.incrementAndGet(),
+                person.firstName(),
+                person.lastName());
     }
 }

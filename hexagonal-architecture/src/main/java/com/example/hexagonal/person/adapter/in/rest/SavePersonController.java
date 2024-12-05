@@ -1,7 +1,7 @@
 package com.example.hexagonal.person.adapter.in.rest;
 
-import com.example.hexagonal.person.business.model.Person;
 import com.example.hexagonal.person.port.in.SavePerson;
+import com.example.hexagonal.person.port.in.SavePerson.NewPerson;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ public class SavePersonController {
     }
 
     @PostMapping
-    public void addName(@RequestBody Person person) {
+    public void addName(@RequestBody NewPerson person) {
         savePerson.execute(person);
     }
 }
