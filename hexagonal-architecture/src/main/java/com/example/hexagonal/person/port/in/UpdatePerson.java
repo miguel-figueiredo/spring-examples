@@ -1,6 +1,6 @@
 package com.example.hexagonal.person.port.in;
 
-import com.example.hexagonal.person.business.model.Person;
+import com.example.hexagonal.person.domain.model.Person;
 import com.example.hexagonal.util.Validation;
 import jakarta.validation.Valid;
 

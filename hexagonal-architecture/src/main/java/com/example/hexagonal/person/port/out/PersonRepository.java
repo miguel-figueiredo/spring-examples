@@ -1,6 +1,6 @@
 package com.example.hexagonal.person.port.out;
 
-import com.example.hexagonal.person.business.model.Person;
+import com.example.hexagonal.person.domain.model.Person;
 
 import java.util.List;
 

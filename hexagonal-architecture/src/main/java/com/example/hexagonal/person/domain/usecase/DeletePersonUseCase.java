@@ -1,4 +1,4 @@
-package com.example.hexagonal.person.business.usecase;
+package com.example.hexagonal.person.domain.usecase;
 
 import com.example.hexagonal.person.port.in.DeletePerson;
 import com.example.hexagonal.person.port.out.PersonRepository;

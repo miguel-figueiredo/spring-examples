@@ -1,6 +1,6 @@
 package com.example.hexagonal.person.adapter.out.persistence;
 
-import com.example.hexagonal.person.business.model.Person;
+import com.example.hexagonal.person.domain.model.Person;
 import com.example.hexagonal.person.port.out.PersonRepository;
 import org.springframework.stereotype.Service;
 

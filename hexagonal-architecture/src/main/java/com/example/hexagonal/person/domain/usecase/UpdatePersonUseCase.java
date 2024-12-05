@@ -1,6 +1,6 @@
-package com.example.hexagonal.person.business.usecase;
+package com.example.hexagonal.person.domain.usecase;
 
-import com.example.hexagonal.person.business.model.Person;
+import com.example.hexagonal.person.domain.model.Person;
 import com.example.hexagonal.person.port.in.UpdatePerson;
 import com.example.hexagonal.person.port.out.PersonRepository;
 import com.example.hexagonal.util.UseCase;

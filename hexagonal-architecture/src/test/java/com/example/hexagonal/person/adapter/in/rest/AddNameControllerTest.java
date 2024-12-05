@@ -1,6 +1,5 @@
-package com.example.hexagonal.person.adapter.persistence;
+package com.example.hexagonal.person.adapter.in.rest;
 
-import com.example.hexagonal.person.adapter.in.rest.SavePersonController;
 import com.example.hexagonal.person.port.in.SavePerson;
 import com.example.hexagonal.person.port.in.SavePerson.NewPerson;
 import com.example.hexagonal.spring.CustomErrorHandler;
