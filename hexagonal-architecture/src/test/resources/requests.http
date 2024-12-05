@@ -1,0 +1,7 @@
+### Add a name
+POST http://localhost:8080/api/names
+
+Miguel Figueiredo
+
+### Gets the list of names
+GET http://localhost:8080/api/names
