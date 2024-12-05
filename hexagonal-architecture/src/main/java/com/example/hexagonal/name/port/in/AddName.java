@@ -7,5 +7,5 @@ import jakarta.validation.constraints.NotEmpty;
  */
 public interface AddName {
 
-    void execute(@NotEmpty String name);
+    void execute(String name);
 }
