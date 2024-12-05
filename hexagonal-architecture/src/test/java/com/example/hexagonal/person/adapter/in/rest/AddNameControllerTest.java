@@ -4,24 +4,29 @@ import com.example.hexagonal.person.port.in.SavePerson;
 import com.example.hexagonal.person.port.in.SavePerson.NewPerson;
 import com.example.hexagonal.spring.CustomErrorHandler;
 import io.restassured.http.ContentType;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.stream.Stream;
+import java.util.Set;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.standaloneSetup;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 
+@ExtendWith(MockitoExtension.class)
 class AddNameControllerTest {
 
     @Mock
-    SavePerson addName;
+    SavePerson savePerson;
 
     @BeforeEach
     void setUp() {
-        standaloneSetup(new SavePersonController(addName), CustomErrorHandler.class);
+        standaloneSetup(new SavePersonController(savePerson), CustomErrorHandler.class);
     }
 
     @Test
@@ -46,7 +51,7 @@ class AddNameControllerTest {
 
     @Test
     void validationError() {
-//        doThrow(new ValidationException()).when(addName).execute(any());
+        doThrow(new ConstraintViolationException(Set.of())).when(savePerson).execute(any());
 
         given()
             .contentType(ContentType.JSON)
@@ -56,23 +61,15 @@ class AddNameControllerTest {
         .then()
             .statusCode(400);
     }
-
+ 
     @Test
     void validPerson() {
         given()
             .contentType(ContentType.JSON)
-            .body("Miguel Figueiredo")
+            .body(new NewPerson("First", "Last"))
         .when()
-            .post("/api/persons")
+                .post("/api/persons")
         .then()
             .statusCode(200);
-    }
-
-    public static Stream<Arguments> invalidPersons() {
-        return Stream.of(
-            Arguments.of(new NewPerson(null, null)),
-            Arguments.of(new NewPerson("First", null)),
-            Arguments.of(new NewPerson(null, "Last"))
-        );
     }
 }
