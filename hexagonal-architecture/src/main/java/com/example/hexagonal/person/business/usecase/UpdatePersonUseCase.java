@@ -3,9 +3,9 @@ package com.example.hexagonal.person.business.usecase;
 import com.example.hexagonal.person.business.model.Person;
 import com.example.hexagonal.person.port.in.UpdatePerson;
 import com.example.hexagonal.person.port.out.PersonRepository;
-import org.springframework.stereotype.Service;
+import com.example.hexagonal.util.UseCase;
 
-@Service
+@UseCase
 public class UpdatePersonUseCase implements UpdatePerson {
 
     private final PersonRepository personRepository;

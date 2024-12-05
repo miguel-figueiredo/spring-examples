@@ -3,12 +3,12 @@ package com.example.hexagonal.person.business.usecase;
 import com.example.hexagonal.person.business.model.Person;
 import com.example.hexagonal.person.port.in.SavePerson;
 import com.example.hexagonal.person.port.out.PersonRepository;
+import com.example.hexagonal.util.UseCase;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-// TODO: replace with alias @UseCase
-@Service
+@UseCase
 public class SavePersonUseCase implements SavePerson {
 
     private final AtomicLong sequence = new AtomicLong(0);

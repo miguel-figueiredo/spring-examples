@@ -2,9 +2,9 @@ package com.example.hexagonal.person.business.usecase;
 
 import com.example.hexagonal.person.port.in.DeletePerson;
 import com.example.hexagonal.person.port.out.PersonRepository;
-import org.springframework.stereotype.Service;
+import com.example.hexagonal.util.UseCase;
 
-@Service
+@UseCase
 public class DeletePersonUseCase implements DeletePerson {
 
     private final PersonRepository personRepository;
