@@ -1,17 +1,13 @@
 package com.example.hexagonal.person.business.model;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.With;
 
 public record Person(
-        @With
+        @NotNull
         Long id,
-        @NotNull
+        @NotEmpty
         String firstName,
-        @NotNull
+        @NotEmpty
         String lastName) {
-
-    public static Person fromName(String firstName, String lastName) {
-        return new Person(null, firstName, lastName);
-    }
 }

@@ -1,8 +1,8 @@
 package com.example.hexagonal.person.adapter.persistence;
 
 import com.example.hexagonal.person.adapter.in.rest.SavePersonController;
-import com.example.hexagonal.person.business.model.Person;
 import com.example.hexagonal.person.port.in.SavePerson;
+import com.example.hexagonal.person.port.in.SavePerson.NewPerson;
 import com.example.hexagonal.spring.CustomErrorHandler;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +51,7 @@ class AddNameControllerTest {
 
         given()
             .contentType(ContentType.JSON)
-            .body(Person.fromName("First", "Last"))
+            .body(new NewPerson("First", "Last"))
         .when()
             .post("/api/persons")
         .then()
@@ -71,9 +71,9 @@ class AddNameControllerTest {
 
     public static Stream<Arguments> invalidPersons() {
         return Stream.of(
-            Arguments.of(Person.fromName(null, null)),
-            Arguments.of(Person.fromName("First", null)),
-            Arguments.of(Person.fromName(null, "Last"))
+            Arguments.of(new NewPerson(null, null)),
+            Arguments.of(new NewPerson("First", null)),
+            Arguments.of(new NewPerson(null, "Last"))
         );
     }
 }
