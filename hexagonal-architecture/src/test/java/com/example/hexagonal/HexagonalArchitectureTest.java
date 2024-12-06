@@ -27,7 +27,7 @@ public class HexagonalArchitectureTest {
                     )
                     .applicationServices("com.example.hexagonal..")
                     .adapter("rest", "..person.adapter.in.rest..")
-                    .adapter("persistence", "..person.adapter.out   .persistence..");
+                    .adapter("persistence", "..person.adapter.out.persistence..");
 
     /**
      * Adapters should not depend on use cases.
