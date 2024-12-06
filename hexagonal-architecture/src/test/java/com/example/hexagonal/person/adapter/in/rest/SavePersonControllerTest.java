@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 
 @ExtendWith(MockitoExtension.class)
-class AddNameControllerTest {
+class SavePersonControllerTest {
 
     @Mock
     SavePerson savePerson;
