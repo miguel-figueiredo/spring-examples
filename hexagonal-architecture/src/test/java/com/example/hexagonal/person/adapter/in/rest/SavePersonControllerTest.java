@@ -5,27 +5,23 @@ import com.example.hexagonal.person.port.in.SavePerson.NewPerson;
 import com.example.hexagonal.spring.CustomErrorHandler;
 import com.example.hexagonal.spring.HexagonalArchitectureApplication;
 import io.restassured.http.ContentType;
-import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Set;
 import java.util.stream.Stream;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.standaloneSetup;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
@@ -85,6 +81,8 @@ class SavePersonControllerTest {
                 .post("/api/persons")
         .then()
             .statusCode(200);
+
+        verify(savePerson).execute(new NewPerson("First", "Last"));
     }
 
     public static Stream<Arguments> invalidPersons() {
