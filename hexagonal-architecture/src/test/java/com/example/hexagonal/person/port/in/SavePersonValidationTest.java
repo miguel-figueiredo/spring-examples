@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.stream.Stream;
 
 // Required because the main class is not in the root package.
+// BOGUS: makes port or use cases depend on spring, and causes a failure in the Arch Unit tests.
 @SpringBootTest(classes = HexagonalArchitectureApplication.class)
 public class SavePersonValidationTest {
 

@@ -20,14 +20,12 @@ public class HexagonalArchitectureTest {
     @ArchTest
     static final ArchRule hexagonal_architecture =
             Architectures.onionArchitecture()
-                    .domainModels("..person.domain.model..")
+                    .domainModels("..model..")
                     .domainServices(
-                            "..person.domain.port..",
-                            "..person.domain.usecase.."
+                            "..usecase.."
                     )
                     .applicationServices("com.example.hexagonal..")
-                    .adapter("rest", "..person.adapter.in.rest..")
-                    .adapter("persistence", "..person.adapter.out.persistence..");
+                    .adapter("adapter", "..adapter..");
 
     /**
      * Adapters should not depend on use cases.
@@ -62,15 +60,16 @@ public class HexagonalArchitectureTest {
                     .orShould().dependOnClassesThat().resideInAPackage("..adapter..");
 
     @ArchTest
-    static final ArchRule person_usecase_dependencies =
-            noClasses().that().resideInAPackage("..person.domain.usecase..")
-                    .should().dependOnClassesThat().resideInAPackage("..person.adapter..")
+    static final ArchRule usecase_dependencies =
+            noClasses().that().resideInAPackage("..domain.usecase..")
+                    .should().dependOnClassesThat().resideInAPackage("..adapter..")
                     .orShould().accessClassesThat(
-                            resideInAPackage("..person.domain.port.in..")
+                            resideInAPackage("..domain.port.in..")
                                     .and(JavaClass.Predicates.INTERFACES));
 
     @ArchTest
     static final ArchRule domain_independent_from_frameworks =
-            noClasses().that().resideInAPackage("..person.domain..")
+            noClasses().that().resideInAPackage("..domain..")
+                    .or().resideInAPackage("..port..")
                     .should().dependOnClassesThat().resideInAPackage("..springframework..");
 }
