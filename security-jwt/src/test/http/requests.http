@@ -1,0 +1,20 @@
+### Get JWT Token
+POST http://localhost:8080/realms/quickstart/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id = authz-servlet &
+client_secret = secret &
+username = jdoe &
+password = jdoe &
+grant_type = password
+
+> {% client.global.set("auth_token", response.body.access_token); %}
+
+### Authenticated Request
+
+GET http://localhost:8081/hello
+Content-Encoding: UTF-8
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+###
