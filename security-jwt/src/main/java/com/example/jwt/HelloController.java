@@ -1,15 +1,18 @@
 package com.example.jwt;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/hello")
 public class HelloController {
 
-    @GetMapping
-    public String hello() {
-        return "Hello World";
+    @GetMapping(path = "/private")
+    public String privateHello() {
+        return "Private: Hello World";
+    }
+
+    @GetMapping(path = "/public")
+    public String publicHello() {
+        return "Public: Hello World";
     }
 }
